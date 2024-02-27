@@ -5,7 +5,17 @@ from .models import Ticket
 import datetime
 
 
-#For Customer
+
+#Ticket Details
+
+def ticket_details(request,pk):
+    ticket=Ticket.objects.get(pk=pk)
+    context={'ticket':ticket}
+    return render(request, 'ticket/ticket_details.html',context)
+
+
+
+"""For Customer"""
 #creating a ticket 
 
 def create_ticket(request):
@@ -95,3 +105,7 @@ def workspace(request):
 
 #Closed/Resolved Tickets
 
+def all_closed_tickets(request):
+    tickets=Ticket.objects.filter(assigned_to=request.user, is_resolved=True)
+    context={'ticket':tickets}
+    return render(request, 'ticket/all_closed_tickets.html',context)
